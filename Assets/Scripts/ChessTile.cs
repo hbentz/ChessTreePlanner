@@ -10,18 +10,18 @@ public class ChessTile : MonoBehaviour
     public ChessBoard Board { get => _board; }
     private ChessBoard _board;
 
-    [SerializeField] Material _darkTile, _lightTile, _darkHighlight, _lightHighlight;
-    public bool Selected
+    [SerializeField] Material _darkTile, _lightTile, _darkHighlight, _lightHighlight; // TODO: Two more highlight colors for potential moves
+    public bool Highlighted
     {
-        get => _selected;
+        get => _highlighted;
         set
         { 
-            _selected = value;
-            if (_selected) GetComponent<MeshRenderer>().material = (xCoord + yCoord) % 2 == 1 ? _darkHighlight : _lightHighlight;
+            _highlighted = value;
+            if (_highlighted) GetComponent<MeshRenderer>().material = (xCoord + yCoord) % 2 == 1 ? _darkHighlight : _lightHighlight;
             else GetComponent<MeshRenderer>().material = (xCoord + yCoord) % 2 == 1 ? _darkTile : _lightTile;
         }
     }
-    private bool _selected = false;
+    private bool _highlighted = false;
 
     public int xCoord = -1;
     public int yCoord = -1;

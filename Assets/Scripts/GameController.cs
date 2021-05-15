@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
 
     // Track all the chessboards with _chessBoards[turn][permutation]
     private List<List<ChessBoard>> _chessBoards = new List<List<ChessBoard>>();
+    private List<ChessTile> _potentialMoves = new List<ChessTile>();
 
     private void Start()
     {
@@ -46,7 +47,7 @@ public class GameController : MonoBehaviour
         SelectBoard(tile.Board);
 
         // If there is an active piece and this is a legal move make the move then deactivate the piece
-        if (_activeFigure != null && _activeFigure.LegalMoves()[tile.xCoord, tile.yCoord])
+        if (_activeFigure != null && _potentialMoves.Contains(tile))
         {
             MovePiece(_activeFigure, tile);
             _activeFigure = null;
@@ -54,15 +55,25 @@ public class GameController : MonoBehaviour
         }
 
         // Deselect the old tile and select the new one
-        if (_activeTile != null) _activeTile.Selected = false;
+        if (_activeTile != null) _activeTile.Highlighted = false;
         _activeTile = tile;
-        _activeTile.Selected = true;
+        _activeTile.Highlighted = true;
+
+        // Reset the potential moves
+        foreach (ChessTile moveTile in _potentialMoves) moveTile.Highlighted = false;  // Unhighlights the squares
 
         // If there is a piece on this tile select it as well, otherwise deselect the active piece
         if (_activeTile.Figure != null)
         {
             _activeFigure = _activeTile.Figure;
-            // TODO: Show the legal moves
+            bool[,] legalMoves = _activeFigure.LegalMoves();
+            
+            // Get the tile references for each legal move
+            _potentialMoves = new List<ChessTile>();
+            for (int x = 0; x < 8; x ++) for (int y = 0; y < 8; y++) if (legalMoves[x, y]) _potentialMoves.Add(_activeChessBoard.Tiles[x, y]);
+
+            // Highlight those squares
+            foreach (ChessTile moveTile in _potentialMoves) moveTile.Highlighted = true;
         }
         else
         {
