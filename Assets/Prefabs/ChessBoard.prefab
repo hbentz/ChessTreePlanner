@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &603866958096118931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 603866958096118928}
+  - component: {fileID: 603866958096118935}
+  - component: {fileID: 603866958096118934}
+  - component: {fileID: 603866958096118929}
+  m_Layer: 0
+  m_Name: BoardHighlight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &603866958096118928
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603866958096118931}
+  m_LocalRotation: {x: 0, y: 0, z: -0.00008726013, w: 1}
+  m_LocalPosition: {x: 3.5, y: -0.001, z: 3.5}
+  m_LocalScale: {x: 0.85, y: 1, z: 0.85}
+  m_Children: []
+  m_Father: {fileID: 603866959626181824}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.01}
+--- !u!33 &603866958096118935
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603866958096118931}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &603866958096118934
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603866958096118931}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 36efce8245a803e41882c1afc04f6c50, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &603866958096118929
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603866958096118931}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &603866959626181826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 603866959626181824}
+  - component: {fileID: 603866959626181827}
+  m_Layer: 0
+  m_Name: ChessBoard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &603866959626181824
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603866959626181826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 603866958096118928}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &603866959626181827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603866959626181826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914156b6e9d76f44a8d5f45150c92044, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chessFigurePrefabs:
+  - {fileID: 5824925926790976601, guid: d5f36125b3cf5fe4988d39179879c1fa, type: 3}
+  - {fileID: 4293847305358188574, guid: baf3948db1cc99f49b4ebb30594d3334, type: 3}
+  - {fileID: 2611919883355600725, guid: 971a6a7c90774864e85ec046b15e81b3, type: 3}
+  - {fileID: 8534290598972576703, guid: 7894e42f9bcf41c41aea265a40c200ac, type: 3}
+  - {fileID: 4643528446434685918, guid: 23a21e8641f452d47b1125fa1bb25389, type: 3}
+  - {fileID: 963373633594990688, guid: 4a69a1ba3b52989459770038766f83c7, type: 3}
+  - {fileID: 1858924170091069030, guid: fe5594ec60d46ed48816d6fb518eaee3, type: 3}
+  - {fileID: 3955013354485802608, guid: 185ff73362d9f684faa053df5b9844b5, type: 3}
+  - {fileID: 606348357019985995, guid: bbb61c8daf84ed54a8765776a2ab2c62, type: 3}
+  - {fileID: 1480830958817024458, guid: a1096c944efe1094aac3def0093c6630, type: 3}
+  - {fileID: 1612457305255870818, guid: e6a1061298df8204dac6bf7f8c960817, type: 3}
+  - {fileID: 767543536231547014, guid: e4bed19d267564e449cfde8578017976, type: 3}
+  BoardHighlight: {fileID: 603866958096118931}
+  _tilePrefab: {fileID: 2320010710056613539, guid: 778b0b63e04145248b6ff1a1942ca96d, type: 3}
+  DarkTile: {fileID: 2100000, guid: 51f34d6918174fe489c9d39113f89412, type: 2}
+  DarkHighlight: {fileID: 2100000, guid: e25ff8b24f813ee48ba9e8f80df4e8fa, type: 2}
+  LightTile: {fileID: 2100000, guid: 959877b9ebf613f4797c5aeaa3622505, type: 2}
+  LightHighlight: {fileID: 2100000, guid: ef1f3b7a6ca5c994fa554ceaa3ba4c75, type: 2}
