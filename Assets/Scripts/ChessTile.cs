@@ -33,9 +33,20 @@ public class ChessTile : MonoBehaviour
         GetComponent<MeshRenderer>().material = (xCoord + yCoord) % 2 == 1 ? _darkTile : _lightTile;
     }
 
-    private void OnMouseUpAsButton()
+    private void OnMouseDown()
     {
         GameObject controller = GameObject.FindGameObjectWithTag("GameController");
         controller.GetComponent<GameController>().SelectTile(this);
+    }
+
+    private void OnMouseUp()
+    {
+        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
+        controller.GetComponent<GameController>().ReleaseOverTile(this);
+    }
+
+    private void OnMouseEnter()
+    {
+        // TODO highlight logic
     }
 }

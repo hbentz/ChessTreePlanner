@@ -26,6 +26,11 @@ public class GameController : MonoBehaviour
         _chessBoards[0].Add(_activeChessBoard);
     }
 
+    private void Update()
+    {
+        // TODO get _activeFigure to follow mouse when holding mouse down
+    }
+
     public void SelectBoard(ChessBoard board)
     {
         if (_activeChessBoard != board)
@@ -54,15 +59,16 @@ public class GameController : MonoBehaviour
         _activeTile.Selected = true;
 
         // If there is a piece on this tile select it as well, otherwise deselect the active piece
-        if (_activeTile.Figure != null) _activeFigure = _activeTile.Figure;
-        else _activeFigure = null;
-
-        // TODO: Show all pieces that could move to that tile with arrows
-    }
-
-    public void FigureSelected(ChessFigure figure)
-    {
-        SelectTile(figure.Tile);
+        if (_activeTile.Figure != null)
+        {
+            _activeFigure = _activeTile.Figure;
+            // TODO: Show the legal moves
+        }
+        else
+        {
+            _activeFigure = null;
+            // TODO: Show all pieces that could move to that tile with arrows
+        }
     }
 
     public void MovePiece(ChessFigure figure, ChessTile targetTile)
@@ -79,5 +85,10 @@ public class GameController : MonoBehaviour
         // Doubly link them:
         figure.Tile = targetTile;
         targetTile.Figure = figure;
+    }
+
+    public void ReleaseOverTile(ChessTile tile)
+    {
+        //TODO: Piece Drag and drop logic
     }
 }
