@@ -24,9 +24,11 @@ public abstract class ChessFigure : MonoBehaviour
         this.transform.localScale = _scale;
     }
 
-    private void OnMouseUpAsButton()
+    public bool[,] LegalMoves()
     {
-        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
+        // If the pieceis pinned there is no legal moves 
+        if (IsPinned()) return new bool[8, 8];
+        return PossibleMove();
     }
 
     // Must return a 8x8 array, with true entries where the piece can be legally moved

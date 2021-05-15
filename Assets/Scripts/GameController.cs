@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
         SelectBoard(tile.Board);
 
         // If there is an active piece and this is a legal move make the move then deactivate the piece
-        if (_activeFigure != null)// && _activeFigure.PossibleMove()[tile.xCoord, tile.yCoord])
+        if (_activeFigure != null && _activeFigure.LegalMoves()[tile.xCoord, tile.yCoord])
         {
             MovePiece(_activeFigure, tile);
             _activeFigure = null;
