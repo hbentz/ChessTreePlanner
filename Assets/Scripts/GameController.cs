@@ -40,31 +40,20 @@ public class GameController : MonoBehaviour
         // Make the tile this belongs to the active board
         SelectBoard(tile.Board);
 
-        // If there is no active tile just select it
-        if (_activeTile == null)
+        // If there is an active piece and this is a legal move make the move then deactivate the piece
+        if (_activeFigure != null)// && _activeFigure.PossibleMove()[tile.xCoord, tile.yCoord])
         {
-            _activeTile = tile;
-            tile.Selected = true;
-        }
-
-        // Otherwise if this a legal move of a piece
-        else if (_activeFigure != null && _activeFigure.PossibleMove()[tile.xCoord, tile.yCoord])
-        {
-            Debug.Log("Moving Piece");
-            // TODO: Create a new board
-            // TODO: Do move logic on that board
+            MovePiece(_activeFigure, tile);
+            _activeFigure = null;
             return;
         }
 
-        // Otherwise deselect the old tile and select the new one
-        else
-        {
-            _activeTile.Selected = false;
-            _activeTile = tile;
-            _activeTile.Selected = true;
-        }
+        // Deselect the old tile and select the new one
+        if (_activeTile != null) _activeTile.Selected = false;
+        _activeTile = tile;
+        _activeTile.Selected = true;
 
-        // If there is a piece on this tile select it
+        // If there is a piece on this tile select it as well, otherwise deselect the active piece
         if (_activeTile.Figure != null) _activeFigure = _activeTile.Figure;
         else _activeFigure = null;
 
@@ -74,5 +63,21 @@ public class GameController : MonoBehaviour
     public void FigureSelected(ChessFigure figure)
     {
         SelectTile(figure.Tile);
+    }
+
+    public void MovePiece(ChessFigure figure, ChessTile targetTile)
+    {
+        // If there is a piece on the target tile destroy it
+        if (targetTile.Figure != null) Destroy(targetTile.Figure.gameObject);
+
+        // Remove this piece from the old tile
+        figure.Tile.Figure = null;
+
+        // Move this piece to the new tile
+        figure.SetPosition(targetTile);
+
+        // Doubly link them:
+        figure.Tile = targetTile;
+        targetTile.Figure = figure;
     }
 }

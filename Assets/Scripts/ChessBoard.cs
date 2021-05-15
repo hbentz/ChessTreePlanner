@@ -17,7 +17,7 @@ public class ChessBoard : MonoBehaviour
 
     // Allows access to all the tiles
     public ChessTile[,] Tiles = new ChessTile[8, 8];
-    private List<ChessFigure> _activeFigures = new List<ChessFigure>();  //  Useful for keeping track all of the pieces on this board
+    public List<ChessFigure> ActiveFigures = new List<ChessFigure>();  //  Useful for keeping track all of the pieces on this board
 
     // Controls BoardHighlightState
     public bool Selected
@@ -59,8 +59,14 @@ public class ChessBoard : MonoBehaviour
         // Instantiate the piece, place it, and track it
         GameObject unityFigure = Instantiate(_chessFigurePrefabs[figureIndex]);
         ChessFigure figure = unityFigure.GetComponent<ChessFigure>();
+        
+        // Move the piece to the tile and doubly link them
         figure.SetPosition(Tiles[x, y]);
-        _activeFigures.Add(figure);
+        figure.Tile = Tiles[x, y];
+        Tiles[x, y].Figure = figure;
+
+        // Track the piece in the active figures
+        ActiveFigures.Add(figure);
     }
 
     public void SpawnAll()
