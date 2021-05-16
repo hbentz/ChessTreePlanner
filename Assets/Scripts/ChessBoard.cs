@@ -18,6 +18,9 @@ public class ChessBoard : MonoBehaviour
     // Allows access to all the tiles
     public ChessTile[,] Tiles = new ChessTile[8, 8];
     public List<ChessFigure> ActiveFigures = new List<ChessFigure>();  //  Useful for keeping track all of the pieces on this board
+    
+    public ChessTile WhiteEnPassantTile;
+    public ChessTile BlackEnPassantTile;
 
     // Controls BoardHighlightState
     public bool Selected

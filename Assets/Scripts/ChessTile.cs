@@ -26,10 +26,14 @@ public class ChessTile : MonoBehaviour
     public int xCoord = -1;
     public int yCoord = -1;
 
-    private void Start()
+    private void Awake()
     {
         // On initialization as GameController may reference this many times
         _board = this.GetComponentInParent<ChessBoard>();
+    }
+
+    private void Start()
+    {
         GetComponent<MeshRenderer>().material = (xCoord + yCoord) % 2 == 1 ? _darkTile : _lightTile;
     }
 

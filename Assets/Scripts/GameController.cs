@@ -14,6 +14,10 @@ public class GameController : MonoBehaviour
     private List<List<ChessBoard>> _chessBoards = new List<List<ChessBoard>>();
     private List<ChessTile> _potentialMoves = new List<ChessTile>();
 
+    private void Awake()
+    {
+    }
+
     private void Start()
     {
         // Createa a chessboard on staratup and spawn all the pieces
@@ -84,20 +88,24 @@ public class GameController : MonoBehaviour
 
     public void MovePiece(ChessFigure figure, ChessTile targetTile)
     {
-        // If there is a piece on the target tile destroy it
-        if (targetTile.Figure != null) Destroy(targetTile.Figure.gameObject);
-
         // Remove this piece from the old tile
         figure.Tile.Figure = null;
 
-        // Move this piece to the new tile
-        figure.SetPosition(targetTile);
+        // If there is a piece on the target tile destroy it
+        if (targetTile.Figure != null) Destroy(targetTile.Figure.gameObject);
 
         // Doubly link them:
         figure.Tile = targetTile;
         targetTile.Figure = figure;
+
+        // Move this piece to the new tile in Unity
+        figure.SetPosition(targetTile);
     }
 
+    public void PromotePawn(Pawn pawn)
+    {
+        // TODO
+    }
     public void ReleaseOverTile(ChessTile tile)
     {
         //TODO: Piece Drag and drop logic

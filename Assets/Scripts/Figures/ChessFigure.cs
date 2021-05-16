@@ -6,8 +6,7 @@ public abstract class ChessFigure : MonoBehaviour
 {
     public ChessTile Tile;
     public bool isBlack;
-
-    private Vector3 _scale = new Vector3(8.5f, 8.5f, 8.5f);
+    public Vector3 Scale = new Vector3(8.5f, 8.5f, 8.5f);
 
     // Move this to a tile at coordinates x, y
     public void SetPosition(ChessBoard board, int x, int y)
@@ -21,7 +20,11 @@ public abstract class ChessFigure : MonoBehaviour
         // Reposition this in Unity
         this.transform.parent = tile.transform;
         this.transform.localPosition = Vector3.zero;
-        this.transform.localScale = _scale;
+        this.transform.localScale = Scale;
+
+        // Any movement from a player removes their EnPassant tile
+        if (isBlack) tile.Board.BlackEnPassantTile = null;
+        else tile.Board.WhiteEnPassantTile = null;
     }
 
     public bool[,] LegalMoves()
@@ -45,7 +48,8 @@ public abstract class ChessFigure : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Remove this from the active figures
+        // Remove this from the active figures and the tile reference to this
         Tile.Board.ActiveFigures.Remove(this);
+        Tile.Figure = null;
     }
 }
