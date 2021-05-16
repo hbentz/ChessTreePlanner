@@ -13,7 +13,6 @@ public class Bishop : ChessFigure
         int currY = Tile.yCoord;
 
         ChessTile[,] tiles = Tile.Board.Tiles;
-        ChessTile tile;
 
         // Crawl through each of the four diagonals 
         // Stopping on any piece but noting a possible move if the unit is of a different color
