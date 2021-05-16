@@ -33,11 +33,13 @@ public class Pawn : ChessFigure
         // Pawns can take other pawns via EnPassant
         if (isBlack && Tile.Board.WhiteEnPassantTile != null)
         {
-            possibleMoves[Tile.Board.WhiteEnPassantTile.xCoord, Tile.Board.WhiteEnPassantTile.yCoord] = true;
+            bool isBeside = y == 3 && Mathf.Abs(Tile.Board.WhiteEnPassantTile.xCoord - Tile.xCoord) < 2;
+            possibleMoves[Tile.Board.WhiteEnPassantTile.xCoord, Tile.Board.WhiteEnPassantTile.yCoord] = isBeside;
         }
         else if (Tile.Board.BlackEnPassantTile != null)
         {
-            possibleMoves[Tile.Board.BlackEnPassantTile.xCoord, Tile.Board.BlackEnPassantTile.yCoord] = true;
+            bool isBeside = y == 4 && Mathf.Abs(Tile.Board.BlackEnPassantTile.xCoord - Tile.xCoord) < 2;
+            possibleMoves[Tile.Board.BlackEnPassantTile.xCoord, Tile.Board.BlackEnPassantTile.yCoord] = isBeside;
         }
 
         return possibleMoves;
@@ -67,7 +69,7 @@ public class Pawn : ChessFigure
         else
         {
             // If the pawn moved two tiles this enables EnPassant on the previous tile, otherwise it eliminates previous enpassant
-            tile.Board.WhiteEnPassantTile = tile.yCoord - Tile.yCoord == 1 ? tile.Board.Tiles[tile.xCoord, tile.yCoord - 1] : null;
+            tile.Board.WhiteEnPassantTile = tile.yCoord - Tile.yCoord == 2 ? tile.Board.Tiles[tile.xCoord, tile.yCoord - 1] : null;
 
             // If this was moving to an Enpassant tile delete the pawn on the correct tile
             if (tile.Board.BlackEnPassantTile != null && tile.Board.BlackEnPassantTile == tile)
