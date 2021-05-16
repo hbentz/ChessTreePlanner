@@ -14,7 +14,7 @@ public class Rook : ChessFigure
 
         ChessTile[,] tiles = Tile.Board.Tiles;
 
-        // Crawl through each of the four diagonals 
+        // Crawl through each of the four directions 
         // Stopping on any piece but noting a possible move if the unit is of a different color
 
         // Crawl left across the board
