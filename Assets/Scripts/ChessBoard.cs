@@ -118,7 +118,7 @@ public class ChessBoard : MonoBehaviour
     public void DrawThreatArrowsToTile(ChessTile tile)
     {
         ClearThreatArrows(); // Clean any existing threat arrows
-        List<ChessFigure> threats = tile.ThreatenedBy();
+        List<ChessFigure> threats = tile.ThreatenedBy(IsBlacksTurn);
 
         int x = tile.xCoord;
         int y = tile.yCoord;

@@ -56,13 +56,26 @@ public abstract class ChessFigure : MonoBehaviour
 
     public bool MoveOnBoard(int x, int y) => (x >= 0 && x < 8 && y >= 0 && y < 8);
 
+    public bool MoveDoesNotConflict(int x, int y, ref ChessTile[,] tiles) => !tiles[x, y].HasFriendlyPiece(isBlack);
+
+    public void AddMoveIfOnboardAndNotConflicting(int x, int y, ref ChessTile[,] tiles, ref bool[,] moveArray)
+    {
+        if (MoveOnBoard(x, y)) moveArray[x, y] = MoveDoesNotConflict(x, y, ref tiles);
+    }
+
+    public List<ChessFigure> ProtectedBy()
+    {
+        // Change the piece's color to see if it's threatened by anything and then change it back
+        isBlack = !isBlack;
+        List<ChessFigure> piecesProtecting = Tile.ThreatenedBy(isBlack);
+        isBlack = !isBlack;
+
+        return piecesProtecting;
+    }
+
     private void OnDestroy()
     {
         // Remove this from the active figures and the tile reference to this
         Tile.Board.ActiveFigures.Remove(this);
-    }
-    public void AddMoveIfOnboardAndNotConflicting(int x, int y, ref ChessTile[,] tiles, ref bool[,] moveArray)
-    {
-        if (x >= 0 && x < 8 && y >= 0 && y < 8) moveArray[x, y] = tiles[x, y].Figure == null || (tiles[x, y].Figure.isBlack != isBlack);
     }
 }

@@ -8,7 +8,9 @@ public class King : ChessFigure
 
     public override bool[,] PossibleMove()
     {
-        bool[,] moves = PossibleAttacks();
+        bool[,] moves = new bool[8, 8];
+        int currX = Tile.xCoord;
+        int currY = Tile.yCoord;
         ChessTile[,] tiles = Tile.Board.Tiles;
 
         // Castle legality check
@@ -19,18 +21,37 @@ public class King : ChessFigure
             // If the queenside rook also hasn't moved, the spaces are empty, and the king is not under threat while travelling
             bool canQueensideCastle = tiles[0, castleY].HasFriendlyPiece(isBlack) && !tiles[0, castleY].Figure.HasMoved;
             for (int i = 1; i < 4; i++) canQueensideCastle = canQueensideCastle && !tiles[i, castleY].HasPiece();
-            for (int i = 2; i <= 4; i++) canQueensideCastle = canQueensideCastle && tiles[i, castleY].ThreatenedBy().Count == 0;
+            for (int i = 2; i <= 4; i++) canQueensideCastle = canQueensideCastle && tiles[i, castleY].ThreatenedBy(isBlack).Count == 0;
             moves[2, castleY] = canQueensideCastle;
 
             // If the kingside rook also hasn't moved, the spaces are empty, and the king is not under threat while travelling
             bool canKingsideCastle = tiles[7, castleY].HasFriendlyPiece(isBlack) && !tiles[7, castleY].Figure.HasMoved;
             for (int i = 5; i < 7; i++) canKingsideCastle = canKingsideCastle && !tiles[i, castleY].HasPiece();
-            for (int i = 4; i < 7; i++) canKingsideCastle = canKingsideCastle && tiles[i, castleY].ThreatenedBy().Count == 0;
+            for (int i = 4; i < 7; i++) canKingsideCastle = canKingsideCastle && tiles[i, castleY].ThreatenedBy(isBlack).Count == 0;
             moves[6, castleY] = canKingsideCastle;
         }
 
-        // TODO: Eliminate moves that put the king in check
+        AddMoveIfLegal(currX + 1, currY, ref tiles, ref moves);
+        AddMoveIfLegal(currX - 1, currY, ref tiles, ref moves);
+        AddMoveIfLegal(currX + 1, currY + 1, ref tiles, ref moves);
+        AddMoveIfLegal(currX + 1, currY - 1, ref tiles, ref moves);
+        AddMoveIfLegal(currX - 1, currY + 1, ref tiles, ref moves);
+        AddMoveIfLegal(currX - 1, currY - 1, ref tiles, ref moves);
+        AddMoveIfLegal(currX, currY + 1, ref tiles, ref moves);
+        AddMoveIfLegal(currX, currY - 1, ref tiles, ref moves);
+
         return moves;
+    }
+
+    public void AddMoveIfLegal(int x, int y, ref ChessTile[,] tiles, ref bool[,] moveArray)
+    {
+        if (MoveOnBoard(x, y))
+        {
+            ChessTile toTile = tiles[x, y];
+            bool noThreatAndEmpty = toTile.ThreatenedBy(isBlack).Count == 0 && !toTile.HasPiece();
+            bool canTake = toTile.HasEnemyPiece(isBlack) && toTile.Figure.ProtectedBy().Count == 0;
+            moveArray[x, y] = noThreatAndEmpty || canTake;
+        }
     }
 
     public override bool[,] PossibleAttacks()
