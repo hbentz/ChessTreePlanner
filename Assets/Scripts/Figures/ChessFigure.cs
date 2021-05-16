@@ -51,4 +51,8 @@ public abstract class ChessFigure : MonoBehaviour
         // Remove this from the active figures and the tile reference to this
         Tile.Board.ActiveFigures.Remove(this);
     }
+    public void AddMoveIfOnboardAndNotConflicting(int x, int y, ref ChessTile[,] tiles, ref bool[,] moveArray)
+    {
+        if (x >= 0 && x < 8 && y >= 0 && y < 8) moveArray[x, y] = tiles[x, y].Figure == null || (tiles[x, y].Figure.isBlack != isBlack);
+    }
 }
