@@ -58,13 +58,12 @@ public class GameController : MonoBehaviour
             return;
         }
 
+        foreach (ChessTile moveTile in _potentialMoves) moveTile.Highlighted = false;  // Unhighlights the previously highlighted moves
+
         // Deselect the old tile and select the new one
         if (_activeTile != null) _activeTile.Highlighted = false;
         _activeTile = tile;
         _activeTile.Highlighted = true;
-
-        // Reset the potential moves
-        foreach (ChessTile moveTile in _potentialMoves) moveTile.Highlighted = false;  // Unhighlights the squares
 
         // If there is a piece on this tile select it as well, otherwise deselect the active piece
         if (_activeTile.Figure != null)
