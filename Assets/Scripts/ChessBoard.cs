@@ -129,13 +129,15 @@ public class ChessBoard : MonoBehaviour
             startY = threat.Tile.yCoord;
 
             angle = Vector2.Angle(Vector2.right, new Vector2(x - startX, y - startY));
+            fillPercent = Mathf.Sqrt(Mathf.Pow(startX - x, 2) + Mathf.Pow(startY - y, 2)) / 10f;
 
             // Rotate and position the arrow starting at the correct location
-            newArrow.GetComponent<RectTransform>().localRotation = Quaternion.Euler(new Vector3(0, 0, -angle));
-            newArrow.GetComponent<RectTransform>().anchoredPosition = new Vector2(startX, startY);
+            RectTransform newArrowRect = newArrow.GetComponent<RectTransform>();
+            newArrowRect.localRotation = Quaternion.Euler(new Vector3(0, 0, -angle));
+            newArrowRect.pivot = new Vector2(1f - fillPercent, 0.5f);
+            newArrowRect.anchoredPosition = new Vector2(startX + 1, startY + 1);
             
-            // Fill it the correct amount
-            fillPercent = Mathf.Sqrt(Mathf.Pow(startX - x, 2) + Mathf.Pow(startY - y, 2)) / 10f;
+            // Fill it the correct 
             newArrow.GetComponent<Image>().fillAmount = fillPercent;
         }
     }
