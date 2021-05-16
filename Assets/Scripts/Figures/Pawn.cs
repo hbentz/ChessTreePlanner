@@ -44,7 +44,7 @@ public class Pawn : ChessFigure
     }
 
     // Special for pawn due to EnPassant logic and promotoion
-    public new void SetPosition(ChessTile tile)
+    public override void SetPosition(ChessTile tile)
     {
         
         // Reposition this in Unity

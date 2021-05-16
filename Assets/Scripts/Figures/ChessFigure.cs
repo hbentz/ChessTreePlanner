@@ -15,7 +15,7 @@ public abstract class ChessFigure : MonoBehaviour
     }
 
     // Move this directly to a tile
-    public void SetPosition(ChessTile tile)
+    public virtual void SetPosition(ChessTile tile)
     {
         // Reposition this in Unity
         this.transform.parent = tile.transform;

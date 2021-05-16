@@ -62,11 +62,11 @@ public class ChessBoard : MonoBehaviour
         // Instantiate the piece, place it, and track it
         GameObject unityFigure = Instantiate(_chessFigurePrefabs[figureIndex]);
         ChessFigure figure = unityFigure.GetComponent<ChessFigure>();
-        
+
         // Move the piece to the tile and doubly link them
-        figure.SetPosition(Tiles[x, y]);
         figure.Tile = Tiles[x, y];
         Tiles[x, y].Figure = figure;
+        figure.SetPosition(Tiles[x, y]);
 
         // Track the piece in the active figures
         ActiveFigures.Add(figure);

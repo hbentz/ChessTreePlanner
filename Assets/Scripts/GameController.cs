@@ -93,12 +93,12 @@ public class GameController : MonoBehaviour
         // If there is a piece on the target tile destroy it
         if (targetTile.Figure != null) Destroy(targetTile.Figure.gameObject);
 
+        // Move this piece to the new tile in Unity
+        figure.SetPosition(targetTile);
+
         // Doubly link them:
         figure.Tile = targetTile;
         targetTile.Figure = figure;
-
-        // Move this piece to the new tile in Unity
-        figure.SetPosition(targetTile);
     }
 
     public void PromotePawn(Pawn pawn)
