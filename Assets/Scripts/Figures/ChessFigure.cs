@@ -30,6 +30,11 @@ public abstract class ChessFigure : MonoBehaviour
         HasMoved = true;
     }
 
+    public virtual bool[,] PossibleAttacks()
+    {
+        return PossibleMove();
+    }
+
     public bool[,] LegalMoves()
     {
         // If the pieceis pinned there is no legal moves 

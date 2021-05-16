@@ -45,6 +45,35 @@ public class Pawn : ChessFigure
         return possibleMoves;
     }
 
+    public override bool[,] PossibleAttacks()
+    {
+        // Disclude all options to start
+        bool[,] possibleMoves = new bool[8, 8];
+
+        // Black pawns move towards y = 0, and white pawns to y = 7
+        int offset = isBlack ? -1 : 1;
+        int x = Tile.xCoord;
+        int y = Tile.yCoord;
+        ChessTile[,] tiles = Tile.Board.Tiles;
+
+        if (x < 7) possibleMoves[x + 1, y + offset] = true;
+        if (x > 0) possibleMoves[x - 1, y + offset] = true;
+
+        // Pawns can take other pawns via EnPassant
+        if (isBlack && Tile.Board.WhiteEnPassantTile != null)
+        {
+            bool isBeside = y == 3 && Mathf.Abs(Tile.Board.WhiteEnPassantTile.xCoord - Tile.xCoord) == 1;
+            possibleMoves[Tile.Board.WhiteEnPassantTile.xCoord, Tile.Board.WhiteEnPassantTile.yCoord] = isBeside;
+        }
+        else if (Tile.Board.BlackEnPassantTile != null)
+        {
+            bool isBeside = y == 4 && Mathf.Abs(Tile.Board.BlackEnPassantTile.xCoord - Tile.xCoord) == 1;
+            possibleMoves[Tile.Board.BlackEnPassantTile.xCoord, Tile.Board.BlackEnPassantTile.yCoord] = isBeside;
+        }
+
+        return possibleMoves;
+    }
+
     // Special for pawn due to EnPassant logic and promotoion
     public override void SetPosition(ChessTile tile)
     {
