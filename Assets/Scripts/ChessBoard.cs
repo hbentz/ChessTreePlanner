@@ -23,6 +23,9 @@ public class ChessBoard : MonoBehaviour
     // Allows access to all the tiles
     public ChessTile[,] Tiles = new ChessTile[8, 8];
     public List<ChessFigure> ActiveFigures = new List<ChessFigure>();  //  Useful for keeping track all of the pieces on this board
+
+    public ChessFigure BlackKing;
+    public ChessFigure WhiteKing;
     
     public ChessTile WhiteEnPassantTile;
     public ChessTile BlackEnPassantTile;
@@ -80,6 +83,10 @@ public class ChessBoard : MonoBehaviour
 
         // Track the piece in the active figures
         ActiveFigures.Add(figure);
+
+        // Track the kings
+        if (figureIndex == 2) BlackKing = figure;
+        if (figureIndex == 8) WhiteKing = figure;
     }
 
     public void SpawnAll()
