@@ -2,12 +2,15 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChessBoard : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _chessFigurePrefabs;  // Pieces in alphabetical order Black Bishop -> White Rook
+    [SerializeField] private GameObject _arrowPrefab;
     [SerializeField] private GameObject _tilePrefab;  // what to instantiate the tiles from
 
+    [SerializeField] private Canvas arrowCanvas;
     [SerializeField] private GameObject BoardHighlight;  // Background for the board
     [SerializeField] private Material _boardDefault;
     [SerializeField] private Material _boardHighlight;
@@ -35,7 +38,7 @@ public class ChessBoard : MonoBehaviour
         }
     }
     private bool _selected = false;
-
+    private List<GameObject> _threatArrows = new List<GameObject>();
 
     void Awake()
     {
@@ -103,5 +106,43 @@ public class ChessBoard : MonoBehaviour
         SpawnChessFigure(5, 7, 7); // R88
 
         for (int i = 0; i < 8; i++) SpawnChessFigure(3, i, 6); // Pawns on 7th rank
+    }
+
+    public void DrawThreatArrowsToTile(ChessTile tile)
+    {
+        ClearThreatArrows(); // Clean any existing threat arrows
+        List<ChessFigure> threats = tile.ThreatenedBy();
+
+        int x = tile.xCoord;
+        int y = tile.yCoord;
+        int startX, startY;
+        float fillPercent, angle;
+
+        // Rotation of arrow is CW -z
+        // Zero point of arrow is 
+        foreach(ChessFigure threat in threats)
+        {
+            GameObject newArrow = Instantiate(_arrowPrefab, arrowCanvas.transform);
+            _threatArrows.Add(newArrow);
+
+            startX = threat.Tile.xCoord;
+            startY = threat.Tile.yCoord;
+
+            angle = Vector2.Angle(Vector2.right, new Vector2(x - startX, y - startY));
+
+            // Rotate and position the arrow starting at the correct location
+            newArrow.GetComponent<RectTransform>().localRotation = Quaternion.Euler(new Vector3(0, 0, -angle));
+            newArrow.GetComponent<RectTransform>().anchoredPosition = new Vector2(startX, startY);
+            
+            // Fill it the correct amount
+            fillPercent = Mathf.Sqrt(Mathf.Pow(startX - x, 2) + Mathf.Pow(startY - y, 2)) / 10f;
+            newArrow.GetComponent<Image>().fillAmount = fillPercent;
+        }
+    }
+
+    public void ClearThreatArrows()
+    {
+        foreach (GameObject arrow in _threatArrows) Destroy(arrow);
+        _threatArrows = new List<GameObject>();
     }
 }

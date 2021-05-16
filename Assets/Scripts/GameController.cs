@@ -78,11 +78,10 @@ public class GameController : MonoBehaviour
             // Highlight those squares
             foreach (ChessTile moveTile in _potentialMoves) moveTile.Highlighted = true;
         }
-        else
-        {
-            _activeFigure = null;
-            // TODO: Show all pieces that could move to that tile with arrows
-        }
+        else _activeFigure = null;
+
+        _activeChessBoard.ClearThreatArrows();
+        _activeChessBoard.DrawThreatArrowsToTile(_activeTile);
     }
 
     public void MovePiece(ChessFigure figure, ChessTile targetTile)
