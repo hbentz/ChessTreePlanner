@@ -6,6 +6,7 @@ public abstract class ChessFigure : MonoBehaviour
 {
     public ChessTile Tile;
     public bool isBlack;
+    public bool HasMoved;
     public Vector3 Scale = new Vector3(8.5f, 8.5f, 8.5f);
 
     // Move this to a tile at coordinates x, y
@@ -25,6 +26,8 @@ public abstract class ChessFigure : MonoBehaviour
         // Any movement from a player removes their EnPassant tile
         if (isBlack) tile.Board.BlackEnPassantTile = null;
         else tile.Board.WhiteEnPassantTile = null;
+
+        HasMoved = true;
     }
 
     public bool[,] LegalMoves()
