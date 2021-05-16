@@ -69,4 +69,10 @@ public class ChessTile : MonoBehaviour
 
         return threats;
     }
+
+    public bool HasFriendlyPiece(bool playerIsBlack) => HasPiece() && (Figure.isBlack == playerIsBlack);
+
+    public bool HasEnemyPiece(bool playerIsBlack) => HasPiece() && (Figure.isBlack != playerIsBlack);
+
+    public bool HasPiece() => Figure != null;
 }

@@ -54,6 +54,8 @@ public abstract class ChessFigure : MonoBehaviour
         return false;
     }
 
+    public bool MoveOnBoard(int x, int y) => (x >= 0 && x < 8 && y >= 0 && y < 8);
+
     private void OnDestroy()
     {
         // Remove this from the active figures and the tile reference to this
