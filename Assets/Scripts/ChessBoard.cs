@@ -67,6 +67,7 @@ public class ChessBoard : MonoBehaviour
         figure.Tile = Tiles[x, y];
         Tiles[x, y].Figure = figure;
         figure.SetPosition(Tiles[x, y]);
+        figure.HasMoved = false;  // Reset the HasMoved indicator
 
         // Track the piece in the active figures
         ActiveFigures.Add(figure);

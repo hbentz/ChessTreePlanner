@@ -22,8 +22,8 @@ public class Pawn : ChessFigure
         if (tiles[x, y + offset].Figure == null)
         {
             possibleMoves[x, y + offset] = true;
-            // Pawns can double move on their first turn
-            if ((y == 6 && isBlack) || (y == 1 && !isBlack)) possibleMoves[x, y + (offset * 2)] = tiles[x, y + (offset * 2)].Figure == null;
+            // Pawns can also double move on their first turn
+            if (!HasMoved) possibleMoves[x, y + (offset * 2)] = tiles[x, y + (offset * 2)].Figure == null;
         }
 
         // Pawns can take units on the in-front diagonal if they are of opposite color
@@ -48,11 +48,7 @@ public class Pawn : ChessFigure
     // Special for pawn due to EnPassant logic and promotoion
     public override void SetPosition(ChessTile tile)
     {
-        
-        // Reposition this in Unity
-        this.transform.parent = tile.transform;
-        this.transform.localPosition = Vector3.zero;
-        this.transform.localScale = Scale;
+        base.SetPosition(tile);
 
         // EnPassant Logic
         if (isBlack)

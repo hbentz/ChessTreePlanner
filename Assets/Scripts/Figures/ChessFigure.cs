@@ -6,7 +6,7 @@ public abstract class ChessFigure : MonoBehaviour
 {
     public ChessTile Tile;
     public bool isBlack;
-    public bool HasMoved;
+    public bool HasMoved = false;
     public Vector3 Scale = new Vector3(8.5f, 8.5f, 8.5f);
 
     // Move this to a tile at coordinates x, y
