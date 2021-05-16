@@ -33,12 +33,12 @@ public class Pawn : ChessFigure
         // Pawns can take other pawns via EnPassant
         if (isBlack && Tile.Board.WhiteEnPassantTile != null)
         {
-            bool isBeside = y == 3 && Mathf.Abs(Tile.Board.WhiteEnPassantTile.xCoord - Tile.xCoord) < 2;
+            bool isBeside = y == 3 && Mathf.Abs(Tile.Board.WhiteEnPassantTile.xCoord - Tile.xCoord) == 1;
             possibleMoves[Tile.Board.WhiteEnPassantTile.xCoord, Tile.Board.WhiteEnPassantTile.yCoord] = isBeside;
         }
         else if (Tile.Board.BlackEnPassantTile != null)
         {
-            bool isBeside = y == 4 && Mathf.Abs(Tile.Board.BlackEnPassantTile.xCoord - Tile.xCoord) < 2;
+            bool isBeside = y == 4 && Mathf.Abs(Tile.Board.BlackEnPassantTile.xCoord - Tile.xCoord) == 1;
             possibleMoves[Tile.Board.BlackEnPassantTile.xCoord, Tile.Board.BlackEnPassantTile.yCoord] = isBeside;
         }
 
