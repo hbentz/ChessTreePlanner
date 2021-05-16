@@ -50,6 +50,5 @@ public abstract class ChessFigure : MonoBehaviour
     {
         // Remove this from the active figures and the tile reference to this
         Tile.Board.ActiveFigures.Remove(this);
-        Tile.Figure = null;
     }
 }
