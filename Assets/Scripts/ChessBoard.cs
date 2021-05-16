@@ -6,9 +6,11 @@ using UnityEngine;
 public class ChessBoard : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _chessFigurePrefabs;  // Pieces in alphabetical order Black Bishop -> White Rook
-    [SerializeField] private GameObject BoardHighlight;  // Shows if the board is active
     [SerializeField] private GameObject _tilePrefab;  // what to instantiate the tiles from
 
+    [SerializeField] private GameObject BoardHighlight;  // Background for the board
+    [SerializeField] private Material _boardDefault;
+    [SerializeField] private Material _boardHighlight;
 
     // Which player is allowed to make a move on this board, starting with White.
     public int Turn = 0;
@@ -26,7 +28,11 @@ public class ChessBoard : MonoBehaviour
     public bool Selected
     {
         get => _selected;
-        set { BoardHighlight.SetActive(value); _selected = value; }
+        set
+        {
+            _selected = value;
+            BoardHighlight.GetComponent<MeshRenderer>().material = _selected ? _boardHighlight : _boardDefault;
+        }
     }
     private bool _selected = false;
 
