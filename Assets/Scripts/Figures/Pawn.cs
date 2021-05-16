@@ -26,9 +26,9 @@ public class Pawn : ChessFigure
             if ((y == 6 && isBlack) || (y == 1 && !isBlack)) possibleMoves[x, y + (offset * 2)] = tiles[x, y + (offset * 2)].Figure == null;
         }
 
-        // Pawns can take units on the in-front diagonal
-        if (x < 7) possibleMoves[x + 1, y + offset] = tiles[x + 1, y + offset].Figure != null;
-        if (x > 0) possibleMoves[x - 1, y + offset] = tiles[x - 1, y + offset].Figure != null;
+        // Pawns can take units on the in-front diagonal if they are of opposite color
+        if (x < 7) possibleMoves[x + 1, y + offset] = tiles[x + 1, y + offset].Figure != null && tiles[x + 1, y + offset].Figure.isBlack != isBlack;
+        if (x > 0) possibleMoves[x - 1, y + offset] = tiles[x - 1, y + offset].Figure != null && tiles[x - 1, y + offset].Figure.isBlack != isBlack;
 
         // Pawns can take other pawns via EnPassant
         if (isBlack && Tile.Board.WhiteEnPassantTile != null)
