@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject _chessBoardPrefab;
+    [SerializeField] private GameObject _pawnPromotionUIPrefabWhite;
+    [SerializeField] private GameObject _pawnPromotionUIPrefabBlack;
 
     private ChessBoard _activeChessBoard;
     private ChessTile _activeTile;
@@ -102,8 +104,12 @@ public class GameController : MonoBehaviour
 
     public void PromotePawn(Pawn pawn)
     {
-        // TODO
+        // Spawn the pawn promotion dialouge and forget about it
+        GameObject promotionUI = Instantiate(pawn.isBlack ? _pawnPromotionUIPrefabBlack : _pawnPromotionUIPrefabWhite, pawn.Tile.transform);
+        promotionUI.transform.localPosition = new Vector3(0f, 0.05f, pawn.isBlack ? -0.125f : 0.125f);
+        promotionUI.GetComponent<PawnPromotionUI>().PromotionPawn = pawn;
     }
+
     public void ReleaseOverTile(ChessTile tile)
     {
         //TODO: Piece Drag and drop logic

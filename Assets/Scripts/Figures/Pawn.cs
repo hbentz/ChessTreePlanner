@@ -56,8 +56,8 @@ public class Pawn : ChessFigure
         int y = Tile.yCoord;
         ChessTile[,] tiles = Tile.Board.Tiles;
 
-        if (x < 7) possibleMoves[x + 1, y + offset] = true;
-        if (x > 0) possibleMoves[x - 1, y + offset] = true;
+        if (x < 7 && y % 7 != 0) possibleMoves[x + 1, y + offset] = true;
+        if (x > 0 && y % 7 != 0) possibleMoves[x - 1, y + offset] = true;
 
         // Pawns can take other pawns via EnPassant
         if (isBlack && Tile.Board.WhiteEnPassantTile != null)
