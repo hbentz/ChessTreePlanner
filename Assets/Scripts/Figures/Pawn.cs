@@ -108,7 +108,7 @@ public class Pawn : ChessFigure
         {
             // This is ran before the two-way figure-tile coupling happens in the MovePiece() logic in GameController
             GameObject controller = GameObject.FindGameObjectWithTag("GameController");
-            controller.GetComponent<GameController>().PromotePawn(this);
+            controller.GetComponent<GameController>().PromotePawn(this, tile);
         }
     }
 }

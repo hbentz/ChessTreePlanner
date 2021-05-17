@@ -102,10 +102,10 @@ public class GameController : MonoBehaviour
         targetTile.Figure = figure;
     }
 
-    public void PromotePawn(Pawn pawn)
+    public void PromotePawn(Pawn pawn, ChessTile promotionTile)
     {
         // Spawn the pawn promotion dialouge and forget about it
-        GameObject promotionUI = Instantiate(pawn.isBlack ? _pawnPromotionUIPrefabBlack : _pawnPromotionUIPrefabWhite, pawn.Tile.transform);
+        GameObject promotionUI = Instantiate(pawn.isBlack ? _pawnPromotionUIPrefabBlack : _pawnPromotionUIPrefabWhite, promotionTile.transform);
         promotionUI.transform.localPosition = new Vector3(0f, 0.05f, pawn.isBlack ? -6.25f : 6.25f);
         promotionUI.GetComponent<PawnPromotionUI>().PromotionPawn = pawn;
     }
