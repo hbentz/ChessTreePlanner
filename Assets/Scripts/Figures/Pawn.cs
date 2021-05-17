@@ -19,7 +19,7 @@ public class Pawn : ChessFigure
         // Generally shouldn't have to worry about out of bounds reference because pawns promote on the last file
 
         // Pawns can be blocked by units in front
-        if (tiles[x, y + offset].Figure == null)
+        if (y % 7 != 0 && tiles[x, y + offset].Figure == null)
         {
             possibleMoves[x, y + offset] = true;
             // Pawns can also double move on their first turn
@@ -103,9 +103,10 @@ public class Pawn : ChessFigure
             }
         }
 
-        // Promotion Logic
-        if ((isBlack && tile.yCoord == 0) || (!isBlack && tile.yCoord == 7))
+        // If the pawn has moved to the last rank open up the promotion window
+        if (tile.yCoord % 7 == 0)
         {
+            // This is ran before the two-way figure-tile coupling happens in the MovePiece() logic in GameController
             GameObject controller = GameObject.FindGameObjectWithTag("GameController");
             controller.GetComponent<GameController>().PromotePawn(this);
         }

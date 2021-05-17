@@ -106,7 +106,7 @@ public class GameController : MonoBehaviour
     {
         // Spawn the pawn promotion dialouge and forget about it
         GameObject promotionUI = Instantiate(pawn.isBlack ? _pawnPromotionUIPrefabBlack : _pawnPromotionUIPrefabWhite, pawn.Tile.transform);
-        promotionUI.transform.localPosition = new Vector3(0f, 0.05f, pawn.isBlack ? -0.125f : 0.125f);
+        promotionUI.transform.localPosition = new Vector3(0f, 0.05f, pawn.isBlack ? -6.25f : 6.25f);
         promotionUI.GetComponent<PawnPromotionUI>().PromotionPawn = pawn;
     }
 
