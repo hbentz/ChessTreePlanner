@@ -54,7 +54,7 @@ public class ChessTile : MonoBehaviour
         // TODO highlight logic
     }
 
-    public List<ChessFigure> ThreatenedBy(bool blackPlayer)
+    public List<ChessFigure> ThreatenedBy(bool friendlyPlayerIsBlack)
     {
         List<ChessFigure> threats = new List<ChessFigure>();
 
@@ -62,7 +62,7 @@ public class ChessTile : MonoBehaviour
         foreach(ChessFigure figure in _board.ActiveFigures)
         {
             // If the figure is the opponent's and it can move here, it is considered a threat
-            if (figure.isBlack != blackPlayer && figure.PossibleAttacks()[xCoord, yCoord]) threats.Add(figure);
+            if (figure.isBlack != friendlyPlayerIsBlack && figure.PossibleAttacks()[xCoord, yCoord]) threats.Add(figure);
         }
 
         return threats;
