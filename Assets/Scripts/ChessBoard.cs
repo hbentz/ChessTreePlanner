@@ -18,7 +18,6 @@ public class ChessBoard : MonoBehaviour
     // Which player is allowed to make a move on this board, starting with White.
     public int Turn = 0;
     public bool IsBlacksTurn = false;
-    public bool InCheck = false;
 
     // Allows access to all the tiles
     public ChessTile[,] Tiles = new ChessTile[8, 8];
@@ -153,5 +152,16 @@ public class ChessBoard : MonoBehaviour
     {
         foreach (GameObject arrow in _threatArrows) Destroy(arrow);
         _threatArrows = new List<GameObject>();
+    }
+
+    public bool PlayerInCheck(bool playerIsBlack)
+    {
+        // TODO
+        return false;
+    }
+
+    public bool MoveCreatesSelfCheck(ChessFigure piece, ChessTile tile, bool playerIsBlack)
+    {
+        return false;
     }
 }

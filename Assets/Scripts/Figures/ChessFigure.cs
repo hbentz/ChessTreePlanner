@@ -37,8 +37,7 @@ public abstract class ChessFigure : MonoBehaviour
 
     public bool[,] LegalMoves()
     {
-        // If the pieceis pinned there is no legal moves 
-        if (IsPinned()) return new bool[8, 8];
+        // TODO: Filter moves that create check
         return PossibleMove();
     }
 
@@ -46,12 +45,6 @@ public abstract class ChessFigure : MonoBehaviour
     public virtual bool[,] PossibleMove()
     {
         return new bool[8, 8];
-    }
-
-    public bool IsPinned()
-    {
-        // TODO: Detect if moving the figure creates a check
-        return false;
     }
 
     public bool MoveOnBoard(int x, int y) => (x >= 0 && x < 8 && y >= 0 && y < 8);
