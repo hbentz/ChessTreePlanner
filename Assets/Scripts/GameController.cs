@@ -100,6 +100,9 @@ public class GameController : MonoBehaviour
         // Doubly link them:
         figure.Tile = targetTile;
         targetTile.Figure = figure;
+
+        // Change the turn
+        figure.Tile.Board.IsBlacksTurn = !figure.Tile.Board.IsBlacksTurn;
     }
 
     public void PromotePawn(Pawn pawn, ChessTile promotionTile)

@@ -37,14 +37,21 @@ public abstract class ChessFigure : MonoBehaviour
 
     public bool[,] LegalMoves()
     {
-        bool[,] moves = PossibleMove();
-        
-        // Filter out all of the moves that create self-check
-        // It's a lot more efficient than it looks because MoveCreatesSelfCheck only executes if moves[x, y] is a possible move
-        ChessBoard board = Tile.Board;
-        for (int x = 0; x < 8; x++) for (int y = 0; y < 8; y++) moves[x, y] = moves[x, y] && !board.MoveCreatesSelfCheck(this, x, y, isBlack);
 
-        return moves;
+        // A piece can't move if it's not the players turn!
+        if (isBlack == Tile.Board.IsBlacksTurn)
+        {
+            bool[,] moves = PossibleMove();
+
+            // Filter out all of the moves that create self-check
+            // It's a lot more efficient than it looks because MoveCreatesSelfCheck only executes if moves[x, y] is a possible move
+            ChessBoard board = Tile.Board;
+            for (int x = 0; x < 8; x++) for (int y = 0; y < 8; y++) moves[x, y] = moves[x, y] && !board.MoveCreatesSelfCheck(this, x, y, isBlack);
+
+            return moves;
+        }
+
+        return new bool[8, 8];
     }
 
     // Must return a 8x8 array, with true entries where the piece can be legally moved
