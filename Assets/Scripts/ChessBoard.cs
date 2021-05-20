@@ -154,31 +154,7 @@ public class ChessBoard : MonoBehaviour
         _threatArrows = new List<GameObject>();
     }
 
-    public bool PlayerInCheck(bool playerIsBlack)
-    {
-        if (BlackKing.Tile.ThreatenedBy(true).Count > 0)
-        {
-            Debug.Log("Black in Check");
-            foreach (ChessFigure figure in BlackKing.Tile.ThreatenedBy(true)) Debug.Log($"{figure.name}: {figure.Tile.name}");
-        }
-        if (BlackKing.Tile.ThreatenedBy(false).Count > 0)
-        {
-            Debug.Log("I reversed logic and black in check");
-            foreach (ChessFigure figure in BlackKing.Tile.ThreatenedBy(false)) Debug.Log($"{figure.name}: {figure.Tile.name}");
-        }
-        if (WhiteKing.Tile.ThreatenedBy(true).Count > 0)
-        {
-            Debug.Log("White in Check");
-            foreach (ChessFigure figure in WhiteKing.Tile.ThreatenedBy(true)) Debug.Log($"{figure.name}: {figure.Tile.name}");
-        }
-        if (WhiteKing.Tile.ThreatenedBy(false).Count > 0)
-        {
-            Debug.Log("I reversed logic and white in check");
-            foreach (ChessFigure figure in WhiteKing.Tile.ThreatenedBy(false)) Debug.Log($"{figure.name}: {figure.Tile.name}");
-        }
-
-        return (playerIsBlack ? BlackKing : WhiteKing).Tile.ThreatenedBy(playerIsBlack).Count > 0;
-    }
+    public bool PlayerInCheck(bool playerIsBlack) => (playerIsBlack? BlackKing : WhiteKing).Tile.ThreatenedBy(playerIsBlack).Count > 0;
 
     public bool MoveCreatesSelfCheck(ChessFigure piece, ChessTile tile, bool playerIsBlack)
     {
