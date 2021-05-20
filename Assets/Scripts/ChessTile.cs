@@ -62,7 +62,7 @@ public class ChessTile : MonoBehaviour
         foreach(ChessFigure figure in _board.ActiveFigures)
         {
             // If the figure is the opponent's and it can move here, it is considered a threat
-            if (figure.isBlack != friendlyPlayerIsBlack && figure.PossibleAttacks()[xCoord, yCoord]) threats.Add(figure);
+            if ((figure.isBlack != friendlyPlayerIsBlack) && figure.PossibleAttacks()[xCoord, yCoord]) threats.Add(figure);
         }
 
         return threats;

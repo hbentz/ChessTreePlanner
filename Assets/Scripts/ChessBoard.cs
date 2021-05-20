@@ -84,8 +84,8 @@ public class ChessBoard : MonoBehaviour
         ActiveFigures.Add(figure);
 
         // Track the kings
-        if (figureIndex == 2) BlackKing = figure;
-        if (figureIndex == 8) WhiteKing = figure;
+        if (figureIndex == 1) BlackKing = figure;
+        if (figureIndex == 7) WhiteKing = figure;
     }
 
     public void SpawnAll()
