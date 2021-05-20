@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ChessBoard : MonoBehaviour
 {
@@ -15,9 +16,22 @@ public class ChessBoard : MonoBehaviour
     [SerializeField] private Material _boardDefault;
     [SerializeField] private Material _boardHighlight;
 
+    [SerializeField] private TMP_Text _underText;
+
     // Which player is allowed to make a move on this board, starting with White.
     public int Turn = 0;
-    public bool IsBlacksTurn = false;
+
+    // Update the text field whenever the turn changes
+    public bool IsBlacksTurn
+    {
+        get => _isBlacksTurn;
+        set
+        {
+            _underText.text = (value ? "Black" : "White") + " To Move";
+            _isBlacksTurn = value;
+        }
+    }
+    private bool _isBlacksTurn = false;
 
     // Allows access to all the tiles
     public ChessTile[,] Tiles = new ChessTile[8, 8];
