@@ -29,7 +29,6 @@ public class GameController : MonoBehaviour
         GameObject firstBoard = Instantiate(_chessBoardPrefab);
         _activeChessBoard = firstBoard.GetComponent<ChessBoard>();
         _activeChessBoard.Selected = true;
-        _pieceSpawner.SpawnStart(_activeChessBoard);
 
         // Add this as this as the 0th turn
         _chessBoards.Add(new List<ChessBoard>());
@@ -40,6 +39,8 @@ public class GameController : MonoBehaviour
     {
         // TODO get _activeFigure to follow mouse when holding mouse down
     }
+
+    public void SpawnStartWrapper() => _pieceSpawner.SpawnStart(_activeChessBoard);
 
     public void SelectBoard(ChessBoard board)
     {
