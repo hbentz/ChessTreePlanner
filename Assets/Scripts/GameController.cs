@@ -16,17 +16,20 @@ public class GameController : MonoBehaviour
     private List<List<ChessBoard>> _chessBoards = new List<List<ChessBoard>>();
     private List<ChessTile> _potentialMoves = new List<ChessTile>();
 
+    private IPieceSpawner _pieceSpawner;
+
     private void Awake()
     {
+        _pieceSpawner = GetComponent<IPieceSpawner>();
     }
 
     private void Start()
     {
-        // Createa a chessboard on staratup and spawn all the pieces
+        // Create a chessboard on start up and spawn all the pieces
         GameObject firstBoard = Instantiate(_chessBoardPrefab);
         _activeChessBoard = firstBoard.GetComponent<ChessBoard>();
         _activeChessBoard.Selected = true;
-        _activeChessBoard.SpawnAll();
+        _pieceSpawner.SpawnStart(_activeChessBoard);
 
         // Add this as this as the 0th turn
         _chessBoards.Add(new List<ChessBoard>());

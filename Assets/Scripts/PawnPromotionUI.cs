@@ -11,7 +11,8 @@ public class PawnPromotionUI : MonoBehaviour
     {
 
         // Get the chessboard to spawn the new piece
-        PromotionPawn.Tile.Board.SpawnChessFigure(chessPiece, PromotionPawn.isBlack, PromotionPawn.Tile.xCoord, PromotionPawn.Tile.yCoord);
+        IPieceSpawner pieceSpawner = GameObject.FindGameObjectWithTag("GameController").GetComponent<IPieceSpawner>();
+        pieceSpawner.SpawnPiece(chessPiece, PromotionPawn.isBlack, PromotionPawn.Tile.name, PromotionPawn.Tile.Board);
 
         // Destroy the pawn on the promotion tile
         Destroy(PromotionPawn.gameObject);
