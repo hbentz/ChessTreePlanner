@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 603866959626181824}
   - component: {fileID: 603866959626181827}
+  - component: {fileID: 8349173564480355917}
   m_Layer: 0
   m_Name: ChessBoard
   m_TagString: Untagged
@@ -143,19 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914156b6e9d76f44a8d5f45150c92044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chessFigurePrefabs:
-  - {fileID: 5824925926790976601, guid: d5f36125b3cf5fe4988d39179879c1fa, type: 3}
-  - {fileID: 4293847305358188574, guid: baf3948db1cc99f49b4ebb30594d3334, type: 3}
-  - {fileID: 2611919883355600725, guid: 971a6a7c90774864e85ec046b15e81b3, type: 3}
-  - {fileID: 8534290598972576703, guid: 7894e42f9bcf41c41aea265a40c200ac, type: 3}
-  - {fileID: 4643528446434685918, guid: 23a21e8641f452d47b1125fa1bb25389, type: 3}
-  - {fileID: 963373633594990688, guid: 4a69a1ba3b52989459770038766f83c7, type: 3}
-  - {fileID: 1858924170091069030, guid: fe5594ec60d46ed48816d6fb518eaee3, type: 3}
-  - {fileID: 3955013354485802608, guid: 185ff73362d9f684faa053df5b9844b5, type: 3}
-  - {fileID: 606348357019985995, guid: bbb61c8daf84ed54a8765776a2ab2c62, type: 3}
-  - {fileID: 1480830958817024458, guid: a1096c944efe1094aac3def0093c6630, type: 3}
-  - {fileID: 1612457305255870818, guid: e6a1061298df8204dac6bf7f8c960817, type: 3}
-  - {fileID: 767543536231547014, guid: e4bed19d267564e449cfde8578017976, type: 3}
   _arrowPrefab: {fileID: 3491092383399262900, guid: d79d4320927e40742964a6b5436cccca, type: 3}
   _tilePrefab: {fileID: 2320010710056613539, guid: 778b0b63e04145248b6ff1a1942ca96d, type: 3}
   arrowCanvas: {fileID: 8804549761429000803}
@@ -169,6 +157,19 @@ MonoBehaviour:
   WhiteKing: {fileID: 0}
   WhiteEnPassantTile: {fileID: 0}
   BlackEnPassantTile: {fileID: 0}
+--- !u!114 &8349173564480355917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603866959626181826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6805b35b356b0ab4a876403c5874a81b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tilePrefab: {fileID: 2320010710056613539, guid: 778b0b63e04145248b6ff1a1942ca96d, type: 3}
 --- !u!1 &1407058432835192021
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,6 @@ using TMPro;
 public class ChessBoard : MonoBehaviour
 {
     [SerializeField] private GameObject _arrowPrefab;
-    [SerializeField] private GameObject _tilePrefab;  // what to instantiate the tiles from
 
     [SerializeField] private Canvas arrowCanvas;
     [SerializeField] private GameObject BoardHighlight;  // Background for the board
@@ -55,31 +54,12 @@ public class ChessBoard : MonoBehaviour
     private bool _selected = false;
     private List<GameObject> _threatArrows = new List<GameObject>();
 
-    
-    void Awake()
+    private IGridSpawner _gridSpawner;
+
+    private void Awake()
     {
-        // Needs to be run in Awake because Start is delayed until after the spawning instance function finishes
-        // Create all the tiles from a1 to h8
-        for (int y = 0; y < 8; y++)
-        {
-            string tileRank = (y + 1).ToString();
-
-            for (int x = 0; x < 8; x++)
-            {
-                // Spawn the tile
-                GameObject newTile = Instantiate(_tilePrefab, this.transform);
-
-                // Initialize the values and hold the tile in the array
-                ChessTile tile = newTile.GetComponent<ChessTile>();
-                tile.xCoord = x; tile.yCoord = y;
-                Tiles[x, y] = tile;
-
-                // Position the tile and name it
-                newTile.transform.localPosition = new Vector3(x, 0, y);
-                string tileFile = Convert.ToChar(x + 97).ToString();
-                newTile.name = tileFile + tileRank;
-            }
-        }
+        _gridSpawner = GetComponent<IGridSpawner>();
+        Tiles = _gridSpawner.SpawnTiles(8, 8);
     }
 
     public void DrawThreatArrowsToTile(ChessTile tile)
