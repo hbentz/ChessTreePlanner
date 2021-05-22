@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class TileSpawner : MonoBehaviour, IGridSpawner
 {
-    [SerializeField] private GameObject _tilePrefab;
+    [SerializeField] private GameObject _darkTilePrefab;
+    [SerializeField] private GameObject _lightTilePrefab;
 
     public ChessTile[,] SpawnTiles(int rows, int columns)
     {
@@ -20,7 +21,7 @@ public class TileSpawner : MonoBehaviour, IGridSpawner
             for (int x = 0; x < columns; x++)
             {
                 // Spawn the tile
-                GameObject newTile = Instantiate(_tilePrefab, this.transform);
+                GameObject newTile = Instantiate((x + y) % 2 == 1 ? _darkTilePrefab : _lightTilePrefab, this.transform);
 
                 // Initialize the values and hold the tile in the array
                 ChessTile tile = newTile.GetComponent<ChessTile>();

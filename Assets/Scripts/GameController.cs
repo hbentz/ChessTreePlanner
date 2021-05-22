@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
         // Create a chessboard on start up and spawn all the pieces
         GameObject firstBoard = Instantiate(_chessBoardPrefab);
         _activeChessBoard = firstBoard.GetComponent<ChessBoard>();
-        _activeChessBoard.Selected = true;
+        _activeChessBoard.Highlighter.Select();
 
         // Add this as this as the 0th turn
         _chessBoards.Add(new List<ChessBoard>());
@@ -44,11 +44,12 @@ public class GameController : MonoBehaviour
 
     public void SelectBoard(ChessBoard board)
     {
+        // Set the selected board to active
         if (_activeChessBoard != board)
         {
-            _activeChessBoard.Selected = false;
+            _activeChessBoard.Highlighter.Deselect();
             _activeChessBoard = board;
-            board.Selected = true;
+            board.Highlighter.Select();
         }
     }
     public void SelectTile(ChessTile tile)
@@ -64,12 +65,12 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        foreach (ChessTile moveTile in _potentialMoves) moveTile.Highlighted = false;  // Unhighlights the previously highlighted moves
+        foreach (ChessTile moveTile in _potentialMoves) moveTile.GetComponent<IHighlighter>().Deselect();  // Unhighlights the previously highlighted moves
 
         // Deselect the old tile and select the new one
-        if (_activeTile != null) _activeTile.Highlighted = false;
+        if (_activeTile != null) _activeTile.GetComponent<IHighlighter>().Deselect();
         _activeTile = tile;
-        _activeTile.Highlighted = true;
+        _activeTile.GetComponent<IHighlighter>().Select();
 
         // If there is a piece on this tile select it as well, otherwise deselect the active piece
         if (_activeTile.Figure != null)
@@ -82,7 +83,7 @@ public class GameController : MonoBehaviour
             for (int x = 0; x < 8; x ++) for (int y = 0; y < 8; y++) if (legalMoves[x, y]) _potentialMoves.Add(_activeChessBoard.Tiles[x, y]);
 
             // Highlight those squares
-            foreach (ChessTile moveTile in _potentialMoves) moveTile.Highlighted = true;
+            foreach (ChessTile moveTile in _potentialMoves) moveTile.GetComponent<IHighlighter>().Select();
         }
         else _activeFigure = null;
 

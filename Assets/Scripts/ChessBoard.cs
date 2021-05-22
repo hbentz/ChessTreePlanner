@@ -10,9 +10,6 @@ public class ChessBoard : MonoBehaviour
     [SerializeField] private GameObject _arrowPrefab;
 
     [SerializeField] private Canvas arrowCanvas;
-    [SerializeField] private GameObject BoardHighlight;  // Background for the board
-    [SerializeField] private Material _boardDefault;
-    [SerializeField] private Material _boardHighlight;
 
     [SerializeField] private TMP_Text _underText;
 
@@ -41,24 +38,17 @@ public class ChessBoard : MonoBehaviour
     public ChessTile WhiteEnPassantTile;
     public ChessTile BlackEnPassantTile;
 
-    // Controls BoardHighlightState
-    public bool Selected
-    {
-        get => _selected;
-        set
-        {
-            _selected = value;
-            BoardHighlight.GetComponent<MeshRenderer>().material = _selected ? _boardHighlight : _boardDefault;
-        }
-    }
-    private bool _selected = false;
+
     private List<GameObject> _threatArrows = new List<GameObject>();
 
     private IGridSpawner _gridSpawner;
 
+    public IHighlighter Highlighter;
+
     private void Awake()
     {
         _gridSpawner = GetComponent<IGridSpawner>();
+        Highlighter = GetComponentInChildren<IHighlighter>();
         Tiles = _gridSpawner.SpawnTiles(8, 8);
     }
 

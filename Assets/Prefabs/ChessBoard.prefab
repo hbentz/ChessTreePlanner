@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 603866958096118935}
   - component: {fileID: 603866958096118934}
   - component: {fileID: 603866958096118929}
+  - component: {fileID: 3685961925670047220}
   m_Layer: 0
   m_Name: BoardHighlight
   m_TagString: Untagged
@@ -97,6 +98,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &3685961925670047220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603866958096118931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864bc7813b9a2a644ada7ba431b29e76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultMaterial: {fileID: 2100000, guid: e3e55221ddfeac14ab2b41fea761acae, type: 2}
+  _highlightMaterial: {fileID: 2100000, guid: 36efce8245a803e41882c1afc04f6c50, type: 2}
 --- !u!1 &603866959626181826
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +160,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _arrowPrefab: {fileID: 3491092383399262900, guid: d79d4320927e40742964a6b5436cccca, type: 3}
-  _tilePrefab: {fileID: 2320010710056613539, guid: 778b0b63e04145248b6ff1a1942ca96d, type: 3}
   arrowCanvas: {fileID: 8804549761429000803}
   BoardHighlight: {fileID: 603866958096118931}
   _boardDefault: {fileID: 2100000, guid: e3e55221ddfeac14ab2b41fea761acae, type: 2}
@@ -169,7 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6805b35b356b0ab4a876403c5874a81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tilePrefab: {fileID: 2320010710056613539, guid: 778b0b63e04145248b6ff1a1942ca96d, type: 3}
+  _darkTilePrefab: {fileID: 2320010710056613539, guid: 778b0b63e04145248b6ff1a1942ca96d, type: 3}
+  _lightTilePrefab: {fileID: 102039591448454771, guid: 7631aa0d1cdf4f84aa362460bad986e2, type: 3}
 --- !u!1 &1407058432835192021
 GameObject:
   m_ObjectHideFlags: 0
