@@ -7,7 +7,6 @@ using TMPro;
 
 public class ChessBoard : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> _chessFigurePrefabs;  // Pieces in alphabetical order Black Bishop -> White Rook
     [SerializeField] private GameObject _arrowPrefab;
     [SerializeField] private GameObject _tilePrefab;  // what to instantiate the tiles from
 
@@ -56,8 +55,12 @@ public class ChessBoard : MonoBehaviour
     private bool _selected = false;
     private List<GameObject> _threatArrows = new List<GameObject>();
 
+    private IPieceGetter _pieceGetter;
     void Awake()
     {
+        // Get the piece getter on awake
+        _pieceGetter = GameObject.FindGameObjectWithTag("GameController").GetComponent<IPieceGetter>();
+
         // Needs to be run in Awake because Start is delayed until after the spawning instance function finishes
         // Create all the tiles from a1 to h8
         for (int y = 0; y < 8; y++)
@@ -82,10 +85,10 @@ public class ChessBoard : MonoBehaviour
         }
     }
 
-    public void SpawnChessFigure(int figureIndex, int x, int y)
+    public void SpawnChessFigure(Type chessPiece, bool isBlack, int x, int y)
     {
         // Instantiate the piece, place it, and track it
-        GameObject unityFigure = Instantiate(_chessFigurePrefabs[figureIndex]);
+        GameObject unityFigure = Instantiate(_pieceGetter.PiecePrefab(chessPiece, isBlack));
         ChessFigure figure = unityFigure.GetComponent<ChessFigure>();
 
         // Move the piece to the tile and doubly link them
@@ -98,34 +101,37 @@ public class ChessBoard : MonoBehaviour
         ActiveFigures.Add(figure);
 
         // Track the kings
-        if (figureIndex == 1) BlackKing = figure;
-        if (figureIndex == 7) WhiteKing = figure;
+        if (chessPiece == typeof(King))
+        {
+            if (isBlack) BlackKing = figure;
+            else WhiteKing = figure;
+        }
     }
 
     public void SpawnAll()
     {
         // Spawns all pieces on the starting board
-        SpawnChessFigure(11, 0, 0); // Ra1
-        SpawnChessFigure(8, 1, 0); // Nb1
-        SpawnChessFigure(6, 2, 0); // Bc1
-        SpawnChessFigure(10, 3, 0); // Qd1
-        SpawnChessFigure(7, 4, 0); // Ke1
-        SpawnChessFigure(6, 5, 0); // Bf1
-        SpawnChessFigure(8, 6, 0); // Ng1
-        SpawnChessFigure(11, 7, 0); // Rh1
+        SpawnChessFigure(typeof(Rook), false, 0, 0); // Ra1
+        SpawnChessFigure(typeof(Knight), false, 1, 0); // Nb1
+        SpawnChessFigure(typeof(Bishop), false, 2, 0); // Bc1
+        SpawnChessFigure(typeof(Queen), false, 3, 0); // Qd1
+        SpawnChessFigure(typeof(King), false, 4, 0); // Ke1
+        SpawnChessFigure(typeof(Bishop), false, 5, 0); // Bf1
+        SpawnChessFigure(typeof(Knight), false, 6, 0); // Ng1
+        SpawnChessFigure(typeof(Rook), false, 7, 0); // Rh1
 
-        for (int i = 0; i < 8; i++) SpawnChessFigure(9, i, 1); // Pawns on 2nd rank
+        for (int i = 0; i < 8; i++) SpawnChessFigure(typeof(Pawn), false, i, 1); // Pawns on 2nd rank
 
-        SpawnChessFigure(5, 0, 7); // Ra8
-        SpawnChessFigure(2, 1, 7); // Nb8
-        SpawnChessFigure(0, 2, 7); // Bc8
-        SpawnChessFigure(4, 3, 7); // Qd8
-        SpawnChessFigure(1, 4, 7); // Kd8
-        SpawnChessFigure(0, 5, 7); // Be8
-        SpawnChessFigure(2, 6, 7); // Nf8
-        SpawnChessFigure(5, 7, 7); // R88
+        SpawnChessFigure(typeof(Rook), true, 0, 7); // Ra8
+        SpawnChessFigure(typeof(Knight), true, 1, 7); // Nb8
+        SpawnChessFigure(typeof(Bishop), true, 2, 7); // Bc8
+        SpawnChessFigure(typeof(Queen), true, 3, 7); // Qd8
+        SpawnChessFigure(typeof(King), true, 4, 7); // Ke8
+        SpawnChessFigure(typeof(Bishop), true, 5, 7); // Bf8
+        SpawnChessFigure(typeof(Knight), true, 6, 7); // Ng8
+        SpawnChessFigure(typeof(Rook), true, 7, 7); // Rh8
 
-        for (int i = 0; i < 8; i++) SpawnChessFigure(3, i, 6); // Pawns on 7th rank
+        for (int i = 0; i < 8; i++) SpawnChessFigure(typeof(Pawn), true, i, 6); // Pawns on 7th rank
     }
 
     public void DrawThreatArrowsToTile(ChessTile tile)

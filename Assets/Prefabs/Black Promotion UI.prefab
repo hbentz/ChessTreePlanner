@@ -121,9 +121,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8384885804967478081}
-        m_TargetAssemblyTypeName: PawnPromotionUI, Assembly-CSharp
-        m_MethodName: ReplacePawn
-        m_Mode: 3
+        m_TargetAssemblyTypeName: PawnPromotionUI, Scripts
+        m_MethodName: PromoteRook
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -253,9 +253,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8384885804967478081}
-        m_TargetAssemblyTypeName: PawnPromotionUI, Assembly-CSharp
-        m_MethodName: ReplacePawn
-        m_Mode: 3
+        m_TargetAssemblyTypeName: PawnPromotionUI, Scripts
+        m_MethodName: PromoteKnight
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -385,9 +385,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8384885804967478081}
-        m_TargetAssemblyTypeName: PawnPromotionUI, Assembly-CSharp
-        m_MethodName: ReplacePawn
-        m_Mode: 3
+        m_TargetAssemblyTypeName: PawnPromotionUI, Scripts
+        m_MethodName: PromoteBisihop
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -596,9 +596,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8384885804967478081}
-        m_TargetAssemblyTypeName: PawnPromotionUI, Assembly-CSharp
-        m_MethodName: ReplacePawn
-        m_Mode: 3
+        m_TargetAssemblyTypeName: PawnPromotionUI, Scripts
+        m_MethodName: PromoteQueen
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -644,7 +644,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 89.99, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.008079931}
+  m_AnchoredPosition: {x: 0, y: 0.008056641}
   m_SizeDelta: {x: 1.25, y: 4.625}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!223 &8384885804967478087
@@ -690,7 +690,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8384885804967478085
 MonoBehaviour:
   m_ObjectHideFlags: 0
