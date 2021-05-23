@@ -31,19 +31,11 @@ public class ChessBoard : MonoBehaviour
     // Allows access to all the tiles
     public ChessTile[,] Tiles = new ChessTile[8, 8];
     public List<ChessFigure> ActiveFigures = new List<ChessFigure>();  //  Useful for keeping track all of the pieces on this board
-
-    public ChessFigure BlackKing;
-    public ChessFigure WhiteKing;
-    
-    public ChessTile WhiteEnPassantTile;
-    public ChessTile BlackEnPassantTile;
-
-
     private List<GameObject> _threatArrows = new List<GameObject>();
 
     private IGridSpawner _gridSpawner;
-
     public IHighlighter Highlighter;
+    public BoardState State;
 
     private void Awake()
     {
@@ -52,13 +44,19 @@ public class ChessBoard : MonoBehaviour
         Tiles = _gridSpawner.SpawnTiles(8, 8);
     }
 
+    public void ActivateGame()
+    {
+        State = new BoardState(ActiveFigures, false);
+    }
+
     public void DrawThreatArrowsToTile(ChessTile tile)
     {
-        ClearThreatArrows(); // Clean any existing threat arrows
-        List<ChessFigure> threats = tile.ThreatenedBy(IsBlacksTurn);
-
         int x = tile.xCoord;
         int y = tile.yCoord;
+
+        ClearThreatArrows(); // Clean any existing threat arrows
+        List<ChessFigure> threats = IsBlacksTurn ? State.BlackPiecesAttacking(x, y) : State.WhitePiecesAttacking(x, y);
+
         int startX, startY;
         float fillPercent, angle;
 
@@ -91,42 +89,5 @@ public class ChessBoard : MonoBehaviour
         foreach (GameObject arrow in _threatArrows) Destroy(arrow);
         _threatArrows = new List<GameObject>();
     }
-
-    public bool PlayerInCheck(bool playerIsBlack) => (playerIsBlack? BlackKing : WhiteKing).Tile.ThreatenedBy(playerIsBlack).Count > 0;
-
-    public bool MoveCreatesSelfCheck(ChessFigure piece, ChessTile tile, bool playerIsBlack)
-    {
-        // Record the the relevant pieces before the move
-        ChessFigure pieceOnToTile = tile.Figure;
-        ChessTile fromTile = piece.Tile;
-
-        // Mock the move
-        piece.Tile = tile;
-        tile.Figure = piece;
-        fromTile.Figure = null;
-        if (pieceOnToTile != null)
-        {
-            pieceOnToTile.Tile = null;
-            ActiveFigures.Remove(pieceOnToTile);
-        }
-
-        // Look for Check
-        bool inCheck = PlayerInCheck(playerIsBlack);
-
-        // Undo the move
-        piece.Tile = fromTile;
-        tile.Figure = pieceOnToTile;
-        fromTile.Figure = piece;
-        if (pieceOnToTile != null)
-        {
-            pieceOnToTile.Tile = tile;
-            ActiveFigures.Add(pieceOnToTile);
-        }
-
-        // Return the finding
-        return inCheck;
-    }
-
-    public bool MoveCreatesSelfCheck(ChessFigure piece, int x, int y, bool playerIsBlack) => MoveCreatesSelfCheck(piece, Tiles[x, y], playerIsBlack);
 
 }

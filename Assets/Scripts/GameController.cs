@@ -23,7 +23,12 @@ public class GameController : MonoBehaviour
         _pieceSpawner = GetComponent<IPieceSpawner>();
     }
 
-    private void Start()
+    private void Update()
+    {
+        // TODO get _activeFigure to follow mouse when holding mouse down
+    }
+
+    public void SpawnStartWrapper()
     {
         // Create a chessboard on start up and spawn all the pieces
         GameObject firstBoard = Instantiate(_chessBoardPrefab);
@@ -33,14 +38,9 @@ public class GameController : MonoBehaviour
         // Add this as this as the 0th turn
         _chessBoards.Add(new List<ChessBoard>());
         _chessBoards[0].Add(_activeChessBoard);
-    }
 
-    private void Update()
-    {
-        // TODO get _activeFigure to follow mouse when holding mouse down
+        _pieceSpawner.SpawnStart(_activeChessBoard);
     }
-
-    public void SpawnStartWrapper() => _pieceSpawner.SpawnStart(_activeChessBoard);
 
     public void SelectBoard(ChessBoard board)
     {
@@ -54,6 +54,11 @@ public class GameController : MonoBehaviour
     }
     public void SelectTile(ChessTile tile)
     {
+        // Selects the board
+        // Selects the tile
+        // Selects the piece
+        // Highlight appropriate tiles
+        // Clear and draw threat arrows
         // Make the tile this belongs to the active board
         SelectBoard(tile.Board);
 
@@ -76,7 +81,7 @@ public class GameController : MonoBehaviour
         if (_activeTile.Figure != null)
         {
             _activeFigure = _activeTile.Figure;
-            bool[,] legalMoves = _activeFigure.LegalMoves();
+            bool[,] legalMoves = _activeFigure.LegalMoves(_activeChessBoard.State);
             
             // Get the tile references for each legal move
             _potentialMoves = new List<ChessTile>();
@@ -94,10 +99,10 @@ public class GameController : MonoBehaviour
     public void MovePiece(ChessFigure figure, ChessTile targetTile)
     {
         // Remove this piece from the old tile
-        figure.Tile.Figure = null;
+        ChessFigure capture = _activeChessBoard.State.ExecuteMove(figure.xCoord, figure.yCoord, targetTile.xCoord, targetTile.yCoord);
 
         // If there is a piece on the target tile destroy it
-        if (targetTile.Figure != null) Destroy(targetTile.Figure.gameObject);
+        if (capture != null) Destroy(capture.gameObject);
 
         // Move this piece to the new tile in Unity
         figure.SetPosition(targetTile);
@@ -105,9 +110,6 @@ public class GameController : MonoBehaviour
         // Doubly link them:
         figure.Tile = targetTile;
         targetTile.Figure = figure;
-
-        // Change the turn
-        figure.Tile.Board.IsBlacksTurn = !figure.Tile.Board.IsBlacksTurn;
     }
 
     public void PromotePawn(Pawn pawn, ChessTile promotionTile)

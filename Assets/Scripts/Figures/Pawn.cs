@@ -5,103 +5,51 @@ using UnityEngine;
 public class Pawn : ChessFigure
 {
     // Start is called before the first frame update
-    public override bool[,] PossibleMove()
+    public override bool[,] PossibleMoves(BoardState state)
     {
+
         // Disclude all options to start
         bool[,] possibleMoves = new bool[8, 8];
         
         // Black pawns move towards y = 0, and white pawns to y = 7
-        int offset = isBlack ? -1 : 1;
-        int x = Tile.xCoord;
-        int y = Tile.yCoord;
-        ChessTile[,] tiles = Tile.Board.Tiles;
+        int moveDir = isBlack ? -1 : 1;
 
         // Generally shouldn't have to worry about out of bounds reference because pawns promote on the last file
 
-        // Pawns can be blocked by units in front
-        if (y % 7 != 0 && tiles[x, y + offset].Figure == null)
+        // If the pawn is not on the ends of the board and the tile infront is clear
+        if (yCoord % 7 != 0 && state.TileIsEmpty(xCoord, yCoord + moveDir))
         {
-            possibleMoves[x, y + offset] = true;
+            possibleMoves[xCoord, yCoord + moveDir] = true;
+
             // Pawns can also double move on their first turn
-            if (!HasMoved) possibleMoves[x, y + (offset * 2)] = tiles[x, y + (offset * 2)].Figure == null;
+            if (!HasMoved) possibleMoves[xCoord, yCoord + (moveDir * 2)] = state.TileIsEmpty(xCoord, yCoord + (moveDir * 2));
         }
 
-        // Pawns can take units on the in-front diagonal if they are of opposite color
-        if (y % 7 != 0 && x < 7) possibleMoves[x + 1, y + offset] = tiles[x + 1, y + offset].Figure != null && tiles[x + 1, y + offset].Figure.isBlack != isBlack;
-        if (y % 7 != 0 && x > 0) possibleMoves[x - 1, y + offset] = tiles[x - 1, y + offset].Figure != null && tiles[x - 1, y + offset].Figure.isBlack != isBlack;
-
-        // Pawns can take other pawns via EnPassant
-        if (isBlack && Tile.Board.WhiteEnPassantTile != null)
-        {
-            bool isBeside = y == 3 && Mathf.Abs(Tile.Board.WhiteEnPassantTile.xCoord - Tile.xCoord) == 1;
-            possibleMoves[Tile.Board.WhiteEnPassantTile.xCoord, Tile.Board.WhiteEnPassantTile.yCoord] = isBeside;
-        }
-        else if (Tile.Board.BlackEnPassantTile != null)
-        {
-            bool isBeside = y == 4 && Mathf.Abs(Tile.Board.BlackEnPassantTile.xCoord - Tile.xCoord) == 1;
-            possibleMoves[Tile.Board.BlackEnPassantTile.xCoord, Tile.Board.BlackEnPassantTile.yCoord] = isBeside;
-        }
+        // Pawns can take units on the in-front diagonal if they are of opposite color, they can also take the EnPassant Tile
+        if (yCoord % 7 != 0 && xCoord < 7) possibleMoves[xCoord + 1, yCoord + moveDir] = state.HasEnemyPiece(xCoord + 1, yCoord + moveDir, isBlack) || state.EnPassantTile == (xCoord + 1, yCoord + moveDir);
+        if (yCoord % 7 != 0 && xCoord > 0) possibleMoves[xCoord - 1, yCoord + moveDir] = state.HasEnemyPiece(xCoord - 1, yCoord + moveDir, isBlack) || state.EnPassantTile == (xCoord + 1, yCoord + moveDir);
 
         return possibleMoves;
     }
 
-    public override bool[,] PossibleAttacks()
+    public override bool[,] PossibleAttacks(BoardState state)
     {
         // Disclude all options to start
-        bool[,] possibleMoves = new bool[8, 8];
+        bool[,] attacks = new bool[8, 8];
 
         // Black pawns move towards y = 0, and white pawns to y = 7
         int offset = isBlack ? -1 : 1;
-        int x = Tile.xCoord;
-        int y = Tile.yCoord;
-        ChessTile[,] tiles = Tile.Board.Tiles;
 
-        if (x < 7 && y % 7 != 0) possibleMoves[x + 1, y + offset] = true;
-        if (x > 0 && y % 7 != 0) possibleMoves[x - 1, y + offset] = true;
+        if (xCoord < 7 && yCoord % 7 != 0) attacks[xCoord + 1, yCoord + offset] = true;
+        if (xCoord > 0 && yCoord % 7 != 0) attacks[xCoord - 1, yCoord + offset] = true;
 
-        // Pawns can take other pawns via EnPassant
-        if (isBlack && Tile.Board.WhiteEnPassantTile != null)
-        {
-            bool isBeside = y == 3 && Mathf.Abs(Tile.Board.WhiteEnPassantTile.xCoord - Tile.xCoord) == 1;
-            possibleMoves[Tile.Board.WhiteEnPassantTile.xCoord, Tile.Board.WhiteEnPassantTile.yCoord] = isBeside;
-        }
-        else if (Tile.Board.BlackEnPassantTile != null)
-        {
-            bool isBeside = y == 4 && Mathf.Abs(Tile.Board.BlackEnPassantTile.xCoord - Tile.xCoord) == 1;
-            possibleMoves[Tile.Board.BlackEnPassantTile.xCoord, Tile.Board.BlackEnPassantTile.yCoord] = isBeside;
-        }
-
-        return possibleMoves;
+        return attacks;
     }
 
     // Special for pawn due to EnPassant logic and promotoion
     public override void SetPosition(ChessTile tile)
     {
         base.SetPosition(tile);
-
-        // EnPassant Logic
-        if (isBlack)
-        {
-            // If the pawn moved two tiles this enables EnPassant on the previous tile, otherwise it eliminates previous enpassant
-            tile.Board.BlackEnPassantTile = Tile.yCoord - tile.yCoord == 2 ? tile.Board.Tiles[tile.xCoord, tile.yCoord + 1] : null;
-
-            // If this was moving to an Enpassant tile delete the pawn on the correct tile
-            if (tile.Board.WhiteEnPassantTile != null && tile.Board.WhiteEnPassantTile == tile)
-            {
-                Destroy(tile.Board.Tiles[tile.xCoord, tile.yCoord + 1].Figure.gameObject);
-            }
-        }
-        else
-        {
-            // If the pawn moved two tiles this enables EnPassant on the previous tile, otherwise it eliminates previous enpassant
-            tile.Board.WhiteEnPassantTile = tile.yCoord - Tile.yCoord == 2 ? tile.Board.Tiles[tile.xCoord, tile.yCoord - 1] : null;
-
-            // If this was moving to an Enpassant tile delete the pawn on the correct tile
-            if (tile.Board.BlackEnPassantTile != null && tile.Board.BlackEnPassantTile == tile)
-            {
-                Destroy(tile.Board.Tiles[tile.xCoord, tile.yCoord - 1].Figure.gameObject);
-            }
-        }
 
         // If the pawn has moved to the last rank open up the promotion window
         if (tile.yCoord % 7 == 0)

@@ -5,21 +5,18 @@ using UnityEngine;
 public class Knight : ChessFigure
 {
     // Start is called before the first frame update
-    public override bool[,] PossibleMove()
+    public override bool[,] PossibleMoves(BoardState state)
     {
         bool[,] moves = new bool[8, 8];
-        int currX = Tile.xCoord;
-        int currY = Tile.yCoord;
-        ChessTile[,] tiles = Tile.Board.Tiles;
 
-        AddMoveIfOnboardAndNotConflicting(currX + 2, currY + 1, ref tiles, ref moves);
-        AddMoveIfOnboardAndNotConflicting(currX + 2, currY - 1, ref tiles, ref moves);
-        AddMoveIfOnboardAndNotConflicting(currX + 1, currY + 2, ref tiles, ref moves);
-        AddMoveIfOnboardAndNotConflicting(currX - 1, currY + 2, ref tiles, ref moves);
-        AddMoveIfOnboardAndNotConflicting(currX - 2, currY + 1, ref tiles, ref moves);
-        AddMoveIfOnboardAndNotConflicting(currX - 2, currY - 1, ref tiles, ref moves);
-        AddMoveIfOnboardAndNotConflicting(currX + 1, currY - 2, ref tiles, ref moves);
-        AddMoveIfOnboardAndNotConflicting(currX - 1, currY - 2, ref tiles, ref moves);
+        AddMoveIfOnboardAndNoCollision(xCoord + 2, yCoord + 1, state, ref moves);
+        AddMoveIfOnboardAndNoCollision(xCoord + 2, yCoord - 1, state, ref moves);
+        AddMoveIfOnboardAndNoCollision(xCoord + 1, yCoord + 2, state, ref moves);
+        AddMoveIfOnboardAndNoCollision(xCoord - 1, yCoord + 2, state, ref moves);
+        AddMoveIfOnboardAndNoCollision(xCoord - 2, yCoord + 1, state, ref moves);
+        AddMoveIfOnboardAndNoCollision(xCoord - 2, yCoord - 1, state, ref moves);
+        AddMoveIfOnboardAndNoCollision(xCoord + 1, yCoord - 2, state, ref moves);
+        AddMoveIfOnboardAndNoCollision(xCoord - 1, yCoord - 2, state, ref moves);
 
         return moves;
     }

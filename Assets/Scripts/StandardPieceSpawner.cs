@@ -27,13 +27,6 @@ public class StandardPieceSpawner : MonoBehaviour, IPieceSpawner
 
         // Track the piece in the active figures
         board.ActiveFigures.Add(figure);
-
-        // Track the kings
-        if (chessPiece == typeof(King))
-        {
-            if (isBlack) board.BlackKing = figure;
-            else board.WhiteKing = figure;
-        }
     }
 
     public void SpawnStart(ChessBoard board)
@@ -63,5 +56,7 @@ public class StandardPieceSpawner : MonoBehaviour, IPieceSpawner
         SpawnPiece(typeof(Bishop), true, "f8", board); // Bf8
         SpawnPiece(typeof(Knight), true,"g8" , board); // Ng8
         SpawnPiece(typeof(Rook), true, "h8", board); // Rh8
+
+        board.ActivateGame();
     }
 }

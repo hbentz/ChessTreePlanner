@@ -5,67 +5,62 @@ using UnityEngine;
 public class Bishop : ChessFigure
 {
     // Start is called before the first frame update
-    public override bool[,] PossibleMove()
+    public override bool[,] PossibleMoves(BoardState state)
     {
         bool[,] moves = new bool[8, 8];
-
-        int currX = Tile.xCoord;
-        int currY = Tile.yCoord;
-
-        ChessTile[,] tiles = Tile.Board.Tiles;
 
         // Crawl through each of the four diagonals 
         // Stopping on any piece but noting a possible move if the unit is of a different color
 
         // Crawl up the top left diagonal
         int j;
-        for (int i = currX - 1; i >= 0; i--)
+        for (int i = xCoord - 1; i >= 0; i--)
         {
-            j = currY + (currX - i);
-            if (j >= 8) break;
-            if (tiles[i, j].Figure == null) moves[i, j] = true;
+            j = yCoord + (xCoord - i);
+            if (j >= state.BoardHeight) break;
+            if (state.TileIsEmpty(i, j)) moves[i, j] = true;
             else
             {
-                if (isBlack != tiles[i, j].Figure.isBlack) moves[i, j] = true;
+                moves[i, j] = state.HasEnemyPiece(i, j, isBlack);
                 break;
             }
         }
 
         // Crawl up the top right diagonal
-        for (int i = currX + 1; i < 8; i++)
+        for (int i = xCoord + 1; i < state.BoardWidth; i++)
         {
-            j = currY + (i - currX);
-            if (j >= 8) break;
-            if (tiles[i, j].Figure == null) moves[i, j] = true;
+            j = yCoord + (i - xCoord);
+            if (j >= state.BoardHeight) break;
+            if (state.TileIsEmpty(i, j)) moves[i, j] = true;
             else
             {
-                if (isBlack != tiles[i, j].Figure.isBlack) moves[i, j] = true;
+                moves[i, j] = state.HasEnemyPiece(i, j, isBlack);
                 break;
             }
         }
 
         // Crawl down the bottom right diagonal
-        for (int i = currX + 1; i < 8; i++)
+        for (int i = xCoord + 1; i < state.BoardWidth; i++)
         {
-            j = currY - (i - currX);
+            j = yCoord - (i - xCoord);
             if (j < 0) break;
-            if (tiles[i, j].Figure == null) moves[i, j] = true;
+            if (state.TileIsEmpty(i, j)) moves[i, j] = true;
             else
             {
-                if (isBlack != tiles[i, j].Figure.isBlack) moves[i, j] = true;
+                moves[i, j] = state.HasEnemyPiece(i, j, isBlack);
                 break;
             }
         }
 
         // Crawl down the bottom left diagonal
-        for (int i = currX - 1; i >= 0; i--)
+        for (int i = xCoord - 1; i >= 0; i--)
         {
-            j = currY - (currX - i);
+            j = yCoord - (xCoord - i);
             if (j < 0) break;
-            if (tiles[i, j].Figure == null) moves[i, j] = true;
+            if (state.TileIsEmpty(i, j)) moves[i, j] = true;
             else
             {
-                if (isBlack != tiles[i, j].Figure.isBlack) moves[i, j] = true;
+                moves[i, j] = state.HasEnemyPiece(i, j, isBlack);
                 break;
             }
         }
