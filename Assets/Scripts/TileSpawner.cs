@@ -16,8 +16,6 @@ public class TileSpawner : MonoBehaviour, IGridSpawner
         // Create all the tiles from a1 to h8
         for (int y = 0; y < rows; y++)
         {
-            string tileRank = (y + 1).ToString();
-
             for (int x = 0; x < columns; x++)
             {
                 // Spawn the tile
@@ -31,7 +29,7 @@ public class TileSpawner : MonoBehaviour, IGridSpawner
                 // Position the tile and name it
                 newTile.transform.localPosition = new Vector3(x, 0, y);
                 string tileFile = Convert.ToChar(x + 97).ToString();
-                newTile.name = tileFile + tileRank;
+                newTile.name = ChessNotationConversion.TileName(x, y);
             }
         }
 
